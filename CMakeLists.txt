@@ -1,0 +1,64 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+# Main project name
+PROJECT(game)
+
+SET(BINARY_OUTPUTPATH "${PROJECT_SOURCE_DIR}/bin")
+SET(LIBRARY_OUTPUTPATH "${PROJECT_SOURCE_DIR}/lib")
+# Options
+OPTION(BUILD_TESTS OFF)
+OPTION(BUILD_DOCS OFF)
+
+if (MSVC)
+	# Runtime Library
+	FOREACH(flag_var
+		CMAKE_CXX_FLAGS CMAKE_CXX_FLAGS_DEBUG CMAKE_CXX_FLAGS_RELEASE 
+		CMAKE_CXX_FLAGS_MINSIZEREL CMAKE_CXX_FLAGS_RELWITHDEBINFO)
+	   IF(${flag_var} MATCHES "/MD")
+		  STRING(REGEX REPLACE "/MD" "/MT" ${flag_var} "${${flag_var}}")
+	   ENDIF(${flag_var} MATCHES "/MD")
+	ENDFOREACH(flag_var)
+	
+	# Build with multiple processes
+	ADD_DEFINITIONS(/MP)
+	# Disable warnings
+	ADD_DEFINITIONS(/wd4244 /wd4267 /wd4018 /wd4355 /wd4800 /wd4251 /wd4996 /wd4146 /wd4305)
+endif ()
+
+# Build Postfix
+SET(CMAKE_DEBUG_POSTFIX "d" CACHE STRING "Default Debug postfix")
+SET(CMAKE_RELEASE_POSTFIX "" CACHE STRING "Default Release postfix")
+SET(CMAKE_RELWITHDEBINFO_POSTFIX "rd" CACHE STRING "Default RelWithDebInfo postfix")
+SET(CMAKE_MINSIZEREL_POSTFIX "s" CACHE STRING "Default MinSizeRel postfix") 
+
+IF (CMAKE_BUILD_TYPE MATCHES "Release")    
+	SET(CMAKE_BUILD_POSTFIX "${CMAKE_RELEASE_POSTFIX}")
+ELSEIF (CMAKE_BUILD_TYPE MATCHES "MinSizeRel")
+	SET(CMAKE_BUILD_POSTFIX "${CMAKE_MINSIZEREL_POSTFIX}")
+ELSEIF(CMAKE_BUILD_TYPE MATCHES "RelWithDebInfo")
+	SET(CMAKE_BUILD_POSTFIX "${CMAKE_RELWITHDEBINFO_POSTFIX}")
+ELSEIF(CMAKE_BUILD_TYPE MATCHES "Debug")
+	SET(CMAKE_BUILD_POSTFIX "${CMAKE_DEBUG_POSTFIX}")
+ELSE()
+	SET(CMAKE_BUILD_POSTFIX "")
+ENDIF()
+
+# Library Prefix
+IF (MSVC)
+  # Add the "lib" prefix for generated .lib outputs.
+  SET(LIB_PREFIX lib)
+ELSE ()
+  # When building with "make", "lib" prefix will be added automatically by
+  # the build tool.
+  SET(LIB_PREFIX)
+ENDIF ()
+
+# Build src
+ADD_SUBDIRECTORY(src)
+# Build test
+IF (BUILD_TESTS)
+	ADD_SUBDIRECTORY(test)
+ENDIF ()
+# Build doc
+IF (BUILD_DOCS)
+	ADD_SUBDIRECTORY(doc)
+ENDIF ()

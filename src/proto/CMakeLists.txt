@@ -1,0 +1,26 @@
+# Project name
+PROJECT(proto)
+
+# Module Protobuf
+FIND_PACKAGE(Protobuf REQUIRED NO_MODULE)
+# Header directories
+INCLUDE_DIRECTORIES(
+	${PROTOBUF_INCLUDE_DIRS}
+	)
+
+# Generate *.proto files
+FILE(GLOB PROTO_METAS "*.proto")
+PROTOBUF_GENERATE_CPP(PROTO_SRCS PROTO_HDRS ${PROTO_METAS})
+
+# Auto generated files
+SET(SRC_LIST ${PROTO_HDRS} ${PROTO_SRCS})
+# Other source files
+AUX_SOURCE_DIRECTORY(. SRC_LIST)
+
+# Generate library
+ADD_LIBRARY(${PROJECT_NAME} STATIC ${SRC_LIST})
+# Link libraries
+TARGET_LINK_LIBRARIES(${PROJECT_NAME})
+
+# Output library
+SET_TARGET_PROPERTIES(${PROJECT_NAME} PROPERTIES PREFIX ${LIB_PREFIX}) 

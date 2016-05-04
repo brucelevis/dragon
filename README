@@ -1,0 +1,13 @@
+Environment Setup
+=================
+If *cmake* command is not available from *Command Prompt*, add it to system *PATH* variable:
+
+    $ set PATH=%PATH%;C:\Program Files (x86)\CMake\bin
+	
+Compiling
+=========
+	$ mkdir build & cd build
+	$ cmake -DCMAKE_BUILD_TYPE=Release ..
+	
+Testing
+=======

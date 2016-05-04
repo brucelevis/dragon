@@ -1,0 +1,10 @@
+ADD_SUBDIRECTORY(core)
+ADD_SUBDIRECTORY(proto)
+ADD_SUBDIRECTORY(scene)
+#ADD_SUBDIRECTORY(gate)
+#ADD_SUBDIRECTORY(record)
+#ADD_SUBDIRECTORY(session)
+#ADD_SUBDIRECTORY(super)
+
+# Project dependencies
+ADD_DEPENDENCIES(scene core proto)

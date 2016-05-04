@@ -1,0 +1,7 @@
+import "foo.proto";
+ 
+message bar_msg 
+{
+  optional foo_msg foo = 1;
+  optional string name = 2;
+}
