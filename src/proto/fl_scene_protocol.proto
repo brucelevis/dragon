@@ -1,0 +1,23 @@
+package fl_scene;
+
+enum MSG_ID
+{
+	MSG_ID_TEST = 0;
+	MSG_ID_TEST_RETURN = 1;
+}
+
+message PbMessage
+{
+	optional MSG_ID msgid  = 1[default = MSG_ID_TEST];
+	optional bytes content = 2;
+}
+
+message PbMsgTest
+{
+	optional bytes talk  = 1;
+}
+
+message PbMsgTestReturn
+{
+	optional bytes talk  = 1;
+}

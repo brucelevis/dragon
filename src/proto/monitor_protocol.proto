@@ -1,0 +1,17 @@
+message PbPropertyItem
+{
+	optional bytes name  = 1;
+	optional bytes value = 2;
+}
+
+message PbGmRequest
+{
+	optional uint32 httpid = 1;
+	repeated PbPropertyItem pb_items = 2;
+}
+
+message PbGmReply
+{
+	optional uint32 httpid = 1;
+	optional bytes json = 2;
+}

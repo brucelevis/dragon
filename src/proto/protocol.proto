@@ -1,0 +1,20 @@
+
+message MsgSaleCell
+{
+	optional uint32 cellid = 1;
+	optional uint32 itemid = 2;
+	optional uint32 itemcount = 3;
+	optional uint32 status = 4; // 0空 1放上物品 2已售
+	optional string nickname = 5;
+}
+
+message MsgRoleCell
+{
+	optional uint64  charid = 1;
+	repeated MsgSaleCell salecells = 2;
+}
+
+message MsgAllRoleCell
+{
+	repeated MsgRoleCell rolecells = 1;
+}

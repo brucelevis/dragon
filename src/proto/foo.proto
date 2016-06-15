@@ -1,4 +1,0 @@
-message foo_msg 
-{
-  optional string name = 1;
-}

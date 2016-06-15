@@ -1,0 +1,38 @@
+package fl_gateway;
+
+enum MSG_ID
+{
+	MSG_ID_TEST = 0;
+	MSG_ID_TEST_RETURN = 1;
+	MSG_ID_LOGIN = 2;
+	MSG_ID_LOGIN_RETURN = 3;
+}
+
+message PbMessage
+{
+	optional MSG_ID msgid  = 1[default = MSG_ID_TEST];
+	optional bytes content = 2;
+}
+
+message PbMsgTest
+{
+	optional bytes talk  = 1;
+}
+
+message PbMsgTestReturn
+{
+	optional bytes talk  = 1;
+}
+
+message PbMsgLogin
+{
+	optional uint32 accountid  = 1;
+	optional bytes token  = 2;
+}
+
+message PbMsgLoginReturn
+{
+	optional uint32 accountid  = 1;
+	optional bool	issuccess  = 2;
+	optional bytes  platform   = 3;
+}

@@ -1,0 +1,1122 @@
+// 二进制序列化对应的脚本
+// 新加结构就加一段新的message,在Serialze中加入新的序列化对象
+
+// 人物身上计数器
+message PbCounter
+{
+        optional uint32 id = 1;         // 计数器编号
+	optional uint32 tag = 2;         // 二级标签
+        optional uint32 type = 3;       // 切换类型,0,不进行切换，只做计数，1按天切换，2按周切换，3按月切换
+        optional uint32 last_time = 4;  // 最后记录时间,为0时，不需要记录
+        optional uint64 count = 5;      // 计数值
+}
+
+message PbPlayerAttributes
+{
+        optional uint32 last_fight = 1;  // 0  上次能量恢复时间,
+        optional uint32 head  = 2; // 0  部位等级,
+        optional uint32 neck  = 3; // 0  部位等级,
+        optional uint32 shoulder  = 4; // 0  部位等级,
+        optional uint32 weapon  = 5; // 0  部位等级,
+        optional uint32 body  = 6; // 0  部位等级,
+        optional uint32 waist  = 7; // 0  部位等级,
+        optional uint32 arm  = 8; // 0  部位等级,
+        optional uint32 leg  = 9; // 0  部位等级,
+        optional uint32 foot  = 10; // 0  部位等级,
+        optional uint32 wing  = 11; // 0  部位等级,
+        optional uint32 left_finger  = 12; // 0  部位等级,
+        optional uint32 right_finger  = 13; // 0  部位等级,
+        optional int32 login_times  = 14; // 0  登录次数, 或 签到次数(一个月),
+        optional int32 equip_bags  = 15; // 40  装备背包格子数,
+        optional int32 gem_bags  = 16; // 40,
+        optional int32 material_bags  = 17; // 40,
+        optional uint32 sp_level  = 18; // 0  经脉等级,
+        optional uint32 sp_exp  = 19; // 0  真气值,
+        optional uint32 head_1  = 20; // 0  部位星级,
+        optional uint32 neck_1  = 21; // 0  部位星级,
+        optional uint32 shoulder_1  = 22; // 0  部位星级,
+        optional uint32 weapon_1  = 23; // 0  部位星级,
+        optional uint32 body_1  = 24; // 0  部位星级,
+        optional uint32 waist_1  = 25; // 0  部位星级,
+        optional uint32 arm_1  = 26; // 0  部位星级,
+        optional uint32 leg_1  = 27; // 0  部位星级,
+        optional uint32 foot_1  = 28; // 0  部位星级,
+        optional uint32 wing_1  = 29; // 0  部位星级,
+        optional uint32 left_finger_1  = 30; // 0  部位星级,
+        optional uint32 right_finger_1 = 31; // 0  部位星级,
+        optional uint32 head_2  = 32; // 0  部位经验,
+        optional uint32 neck_2  = 33; // 0  部位经验,
+        optional uint32 shoulder_2  = 34; // 0  部位经验,
+        optional uint32 weapon_2  = 35; // 0  部位经验,
+        optional uint32 body_2  = 36; // 0  部位经验,
+        optional uint32 waist_2  = 37; // 0  部位经验,
+        optional uint32 arm_2  = 38; // 0  部位经验,
+        optional uint32 leg_2  = 39; // 0  部位经验,
+        optional uint32 foot_2  = 40; // 0  部位经验,
+        optional uint32 wing_2  = 41; // 0  部位经验,
+        optional uint32 left_finger_2  = 42; // 0  部位经验,
+        optional uint32 right_finger_2  = 43; // 0  部位经验,
+		optional uint32 soul_stone  = 44; // 0  魂石,
+		optional uint32 turn_score  = 45; // 转盘积分
+}
+
+message PbCommonSingleUse
+{
+        optional uint32 level_gift = 1;     //等级礼包
+        optional uint32 pay_gift = 2;   //充值vip礼包
+        optional uint32 pay_money = 3;    //0位：是否充值过，1位：月卡，2位：永久性月卡；1-10商品id范围，11位：首充是否领取
+        optional uint32 shop_limit = 4;    //商店终生限购
+        optional uint32 symbol_reward = 5;    //符文首次奖励
+        optional uint32 exchange_gift = 6;    //兑换码礼包
+        optional int32 guide_id = 7;    // 新手引导id
+        optional uint32 practice_time = 8;    //修炼上次领取时间
+        optional int32 login_times = 9;    //连续登录次数
+        optional uint32 login_rewards = 10;    //连续登录奖励是否领取
+        optional uint32 login_time = 11;    //上次登录领取时间
+        optional int32 pvp_best_rank = 12;   
+        optional int32 month_end_time = 13;    //月卡结束时间（天）
+        optional int32 month_first_rewards = 14;    //领取过首冲奖励的idbitset
+        optional int32 buy_vip_shop = 15;    //vip商店购买情况
+		optional uint32 gold_gamble = 16;
+		optional uint32 diamond_gamble = 17;
+		optional uint32 month_cardid = 18;		//月卡id
+		optional int32 god_weapon_times = 19;	//神兵连续登录天数
+		optional int32 treasure_times = 20;		//宝藏争夺次数
+		optional int32 symbol_diamond = 21;		//符文抽取次数
+		optional int32 ever_battle_rewards = 22; //生死门阶段奖励
+		optional int32 ever_battle_score = 23; 	//生死门魂值
+		optional int32 symbol_energy = 24;		//符文秘能
+		optional int32 month_card_recharge_count = 25; 	//月卡累计充值的元宝数量(用于激活月卡,月卡激活后清空)
+		optional int32 ever_card_recharge_count = 26;		//终身卡累计充值的元宝数量(用于激活终生卡,永久不清空)
+		optional bool month_card_state = 27; 	//月卡累计开启状态
+		optional bool ever_card_state = 28;		//终身卡开启状态
+}
+
+message  PbCommonTodayInfo
+{
+        optional int32 energy_times = 1;    //购买体力包次数
+        optional int32 buy_gold_times = 2;    //购买金币次数
+        optional int32 gold_level_times = 3;    //金币副本次数
+        optional int32 exp_level_times = 4;    //经验副本次数
+        optional int32 lottery_times = 5;    //转盘抽奖次数
+        optional int32 gamble_times = 6;    //免费赌博次数
+        optional int32 is_login = 7;    //是否已签到
+        optional int32 present_times = 8;    //赠送体力次数
+        optional int32 recieve_times = 9;    //接受（领取）体力次数
+        optional int32 buy_gold_level = 10;    //购买金币副本次数
+        optional int32 buy_exp_level = 11;    //购买经验副本次数
+        optional uint32 shop_limit = 12;    //商店每日限购
+        optional int32 treasure_num = 13;    //抢夺宝藏次数
+        optional uint32 treasure_state = 14;    //随机到的宝藏是否被打过
+        optional int32 active_value = 15;    //活跃度
+        optional uint32 active_rewards = 16;    //活跃度奖励是否领取
+        optional int32 bounty_task_times = 17;    //赏金任务完成次数
+        optional int32 month_card_reward = 18;    //月卡每日奖励是否领取
+        optional int32 mystical_shop_times = 19;    //神秘商店刷新次数
+        optional int32 buy_mystical_shop = 20;    //购买神秘商店次数
+        optional int32 boss_level_times = 21;    //boss副本次数
+        optional int32 buy_boss_level = 22;    //购买boss副本次数
+        optional int32 inter_shop_times = 23;    //内购次数
+		optional int32 drink_wine_times = 24;	//喝酒次数
+		optional int32 drink_wine_start	= 25;	//喝酒状态
+		optional uint32 drink_interval_time = 26;	//喝酒间隔时间
+	    optional int32 buy_treasure_times = 27;		//宝藏争夺购买次数
+		optional int32 left_treasure_times = 28;	//宝藏争夺剩余次数
+		optional int32 enter_battle_times = 29;		//进入生死门次数
+		optional int32 buy_battle_times = 30;		//购买生死门次数
+		optional int32 left_battle_times = 31; 		//剩余生死门次数
+		optional int32 ever_battle_rewards = 32; 	//已领取生死门奖励层数
+		optional int32 ever_battle_box_rewards = 33; //已经领取生死门宝箱层数
+}
+
+message PbCurrentEpinlay 
+{
+        message PbPartInlays
+        {
+                message PbInlay
+                {
+                        optional int32 order_id = 1;
+                        optional uint32 gem_id  = 2;
+                }
+                repeated PbInlay inlays         = 1;
+        }
+        repeated PbPartInlays parts     = 1;
+}
+
+message PbCurrentEquip 
+{
+        optional uint32 head = 1;  
+        optional uint32 neck  = 2;   //颈部
+        optional uint32 shoulder  = 3;   //肩部
+        optional uint32 weapon  = 4;  
+        optional uint32 body  = 5;   //身体胸甲
+        optional uint32 waist  = 6;   //腰部
+        optional uint32 arm  = 7;   //手臂
+        optional uint32 leg  = 8;  
+        optional uint32 foot  = 9; 
+        optional uint32 wing  = 10;   //翅膀
+        optional uint32 left_finger  = 11;  
+        optional uint32 right_finger  = 12;  
+        optional int32 suit = 13;    //当前套装
+}
+
+message PbCurrentSkill 
+{
+        optional uint32 active1  = 1;   //主动技能
+        optional uint32 active2  = 2;  
+        optional uint32 active3  = 3;  
+        optional uint32 passive1  = 4;   //被动技能
+        optional uint32 passive2  = 5;  
+        optional uint32 passive3  = 6;  
+        optional uint32 unique1  = 7;   //必杀技
+}
+
+message PbCurrentSymbol 
+{
+        message PbSymbol
+        {
+                required uint32 item_id = 1;
+                optional int32 exp      = 2;
+                optional int32 level    = 3;
+        }
+        repeated PbSymbol symbos        = 1;
+}
+
+message PbFightAttr 
+{
+        optional float life  = 1;  
+        optional float defense  = 2; 
+        optional float attack  = 3; 
+        optional float critical  = 4; 
+        optional float breake  = 5; 
+        optional float injury  = 6; 
+        optional float penetrate  = 7; 
+        optional float pvppower  = 8; 
+        optional float pvpresist  = 9; 
+        optional float criticalresist  = 10; 
+        optional float breakresist  = 11; 
+        optional float attack_factor  = 12; 
+        optional float energyadd  = 13; 
+        optional float expadd  = 14; 
+        optional float goldadd  = 15; 
+        optional int32 fight_power  = 16; 
+		optional float missodds  = 17; 
+        optional float hitodds  = 18; 
+        optional float hurtdeepen  = 19; 
+		optional float hurtremission  = 20; 
+        optional float breakdefense  = 21; 
+        optional float ragebonuses  = 22; 
+}
+
+message PbItemsEquip 
+{
+        message PbItemEquip
+        {
+                optional uint32 item_id = 1;
+                optional uint32 count   = 2;
+        }
+        repeated PbItemEquip items = 1;
+}
+
+message PbItemsGem 
+{
+        message PbItemGem
+        {
+                optional uint32 item_id = 1;
+                optional uint32 count   = 2;
+        }
+        repeated PbItemGem items = 1;
+}
+
+message PbItemsMaterial
+{
+        message PbItemMaterial
+        {
+                optional uint32 item_id = 1;
+                optional uint32 count   = 2;
+        }
+        repeated PbItemMaterial items = 1;
+}
+
+message PbItemsSkill
+{
+        message PbItemSkill
+        {
+                optional uint32 skill_id = 1;
+                optional uint32 level   = 2;
+        }
+        repeated PbItemSkill items = 1;
+}
+
+message PbItemsSymbol
+{
+        message PbItemSymbol
+        {
+                optional uint32 item_id = 1;
+                optional uint32 exp     = 2;
+                optional uint32 level   = 3;
+        }
+        repeated PbItemSymbol items = 1;
+}
+
+message PbMainTaskInfo 
+{
+        message PbBoxGet
+        {
+                required int32 chapter_id       = 1;
+                optional bool is_get_copper     = 2;
+                optional bool is_get_silver     = 3;
+                optional bool is_get_gold       = 4;
+                optional int32 chapter_type     = 5;
+        }
+        message PbMapData
+        {
+                message PbLevelData
+                {
+                        optional int32 comm_level        = 1; 
+                        optional int32 special_level     = 2;
+						optional int32 levelsboxget_comm = 3;
+						optional int32 levelsboxget_spec = 4;
+                }
+                repeated PbLevelData level_data         = 1;
+        }
+        optional int32 curr_id          = 1;    //当前 任务位置, 在ci_auto_task中
+        optional int32 is_over          = 2;    //是否完成
+        repeated PbBoxGet box_get       = 3;    //章节评级宝箱领取情况
+        repeated PbMapData chapters     = 4;    //评级信息
+}
+
+message PbMainTaskTodayInfo 
+{
+        message PbMapData
+        {
+                message PbLevelData
+                {
+
+                        optional int32 MiniMapId        = 1;
+                        optional int32 ResetTimes       = 2;
+                        optional int32 SpecialTimes     = 3;
+						optional int32 ResetComTimes    = 4;
+						optional int32 CommonTimes 		= 5;
+                }
+                repeated PbLevelData level_data         = 1;
+        }
+        repeated PbMapData chapters     = 1;
+}
+
+message PbPlayerAchieveInfo
+{
+        message PbObjAchieve
+        {
+                required int32 achieve_id       = 1;    // 成就ID
+                optional bool is_get            = 2;    // 是否领取
+        }
+        optional uint32 rewards         = 1;    //类型奖励是否领取
+        repeated PbObjAchieve achieves  = 2;    //单个成就奖励是否领取
+}
+
+message PbPlayerDayTask
+{
+        message PbDayTask
+        {
+                required int32 value            = 1;
+                optional bool is_get            = 2;
+        }
+        repeated PbDayTask day_task     = 1;
+        optional uint32 month_time      = 2;   //月卡到期时间
+        optional uint32 save_time       = 3;
+}
+
+message PbPlayerEnhance
+{
+        message PbPartEnhances
+        {
+				optional int32 part_type = 1;
+				optional int32 color = 2;
+				optional int32 is_active = 3;
+                message PbEnhance
+                {
+                    optional int32 attr_type        = 1;
+                    optional int32 cur_attr         = 2;
+                }
+                repeated PbEnhance enhances      = 4;
+        }
+        repeated  PbPartEnhances parts           = 1;
+}
+
+message Pbpwd
+{
+	optional int32 godweaponid = 1;
+	optional int32 stage = 2;
+}
+
+message PbPlayerGodWeapon
+{
+	optional int32 level = 1;
+	optional int32 exp = 2;
+	repeated Pbpwd pbpwds = 3;
+
+	message wplocation
+	{
+		optional int32  godweapon_id= 1;
+		optional int32 position = 2;
+	}
+	repeated wplocation wplocations = 4;
+}
+
+message PbPlayerRecharge
+{
+	optional uint32 recharge_count = 1;
+}
+
+message PbPlayerTreasure
+{
+        message PbTreasureInfo
+        {
+                optional uint32 result          = 1;
+                optional uint32 player_id       = 2;
+                optional uint32 suit            = 3;
+                optional int32 level            = 4;
+                optional int32 profession       = 5;
+                optional uint32 count           = 6;
+                optional int32 treasure_id      = 7;
+                optional uint32 cur_time        = 8;
+                optional bytes name             = 9;
+				optional uint32 fight_power      = 10;
+        }
+        optional uint32 last_time = 1;   //上次被攻击/领取时间
+        optional uint32 attack_time = 2;   //可被攻击时间
+        repeated PbTreasureInfo info = 3;   //被抢夺的信息
+}
+
+message PbPlayerOtherInfo
+{
+        optional uint32 discount_end_time = 1;   //折扣活动结束时间
+        optional bytes buy_item_info = 2;   //折扣购买道具信息
+	optional uint32 last_lost_map_id = 3;   //最后一次战斗失败的地图id
+	optional bytes last_lost_map_desc = 4;   //最后一次战斗失败的地图描述
+	optional uint32 last_level_update_time =5; //最后一次升级的时间
+}
+
+message PbOneMail
+{
+        message PbAttach
+        {
+                optional uint32 item_id         = 1;
+                optional int32 count            = 2;
+        }
+        message PbMoney
+        {
+                optional int32 type             = 1;
+                optional int32 value            = 2;
+        }
+	optional uint32 is_get = 1;
+	optional uint32 is_read = 2;
+	optional uint32 is_del = 3;
+	optional uint32 itime = 4;
+	optional uint32 field = 5;
+	optional bytes name = 6;
+	optional bytes content = 7;
+	optional bytes sender = 8;
+	repeated PbAttach attach = 9;
+	repeated PbMoney money = 10;
+}
+
+message PbPlayerMail
+{
+	optional uint32 cursor = 1;
+	repeated PbOneMail pb_mails = 2;
+}
+
+message PbPlayerTitle
+{
+        message PbTitleInfo
+        {  
+                optional int32 title_id         = 1;
+                optional int32 title_times      = 2;
+        }
+	optional uint32 title = 1;   //完成称号
+	optional uint32 curtitle = 2;//使用的称号id
+	repeated PbTitleInfo titletimes = 3; //完成称号的开始时间
+}
+
+message PbFriendPvp
+{
+	optional int32 pvp_val = 1;    // 好友切磋 积分
+}
+
+message PbItemsSymbolEx
+{
+        message PbItemSymbolEx
+        {
+                optional uint32 item_id = 1;
+                optional uint32 exp     = 2;
+                optional uint32 level   = 3;
+        }
+        repeated PbItemSymbolEx items = 1;
+}
+
+// 金币副本数据
+message PbPlayerGoldLevel
+{
+        // 阶段数据（日清）
+        message PbChapterData
+        {
+                required int32 id               = 1;    // 阶段ID
+                optional int32 max_kill_count   = 2;    // 最大击杀数量
+                repeated int32 boxes_get        = 3;    // 已领取宝箱
+        }
+
+       // 阶段数据（不清）
+        message Pb_sao_dang
+        {
+                required int32 id                     = 1;    // 阶段ID
+				optional int32 max_single_kill        = 2;    //单次最大击杀数量
+		        optional int32 max_single_score       = 3;    //单次最大积分
+		        optional int32 max_single_money       = 4;    //单词最大金币
+
+        }
+        optional int32 times_used               = 1;    // 已使用次数
+        optional int32 times_bought             = 2;    // 已购买次数
+        optional int32 times_surplus            = 3;    // 过剩次数
+        repeated PbChapterData chapter_data     = 4;    // 阶段数据
+		repeated Pb_sao_dang  sao_dang          = 5;    // 扫荡数据
+
+}
+
+// 经验副本数据
+message PbPlayerExpLevel
+{
+        // 阶段数据（日期）
+        message PbChapterData
+        {
+                required int32 id               = 1;                // 阶段ID
+                optional int32 max_kill_count   = 2;               // 最大击杀数量
+                repeated int32 boxes_get        = 3;               // 已领取宝箱
+        }
+
+		
+        // 阶段数据（不清）
+        message Pbsaodang
+        {
+                required int32 id               = 1;                // 阶段ID
+				optional int32 max_single_dps     = 2;             //单次最大输出
+		        optional int32 max_single_kill_count = 3;          //单次最大击杀数量
+		        optional int32 max_single_combo  =   4;            //单次最大连击
+		        optional int32 max_single_exp    =   5;            //单次最大经验
+        }
+
+        optional int32 times_used               = 1;    // 已使用次数
+        optional int32 times_bought             = 2;    // 已购买次数
+        optional int32 times_surplus            = 3;    // 过剩次数
+        repeated PbChapterData chapter_data     = 4;    // 阶段数据
+		repeated Pbsaodang sao_dang             = 5;    // 扫荡数据
+}
+
+// 困难副本数据
+message PbPlayerBossLevel
+{
+        optional int32 times_used               = 1;    // 已使用次数
+        optional int32 times_bought             = 2;    // 已购买次数
+        optional int32 times_surplus            = 3;    // 过剩次数
+}
+
+// 世界BOSS数据
+message PbPlayerBossFight
+{
+        optional int32 times_used               = 1;    // 已使用次数
+        optional int32 times_bought             = 2;    // 已购买次数
+        optional int32 times_surplus            = 3;    // 过剩次数
+        optional int32 total_damage             = 4;    // 累计伤害
+        optional uint32 rewards_got             = 5;    // 已领取奖励（标志）
+}
+
+// 真气副本数据
+message PbPlayerSpExpLevel
+{
+        // 阶段数据(日清)
+        message PbBoxData
+        {
+                required int32 id               = 1;    // 阶段ID
+                optional int32 max_kill_count   = 2;    // 最大击杀数量
+                optional int32 boxes_get        = 3;    // 已领取宝箱
+        }
+
+		//add by lifengjun 2016.3.17
+		//扫荡数据（不清）
+		message sao_dang_data
+		{
+			 required int32 id               = 1;    // 阶段ID
+			 optional int32 max_single_sp    = 2;    // 最大获得的真气
+			 optional int32 max_single_time  = 3;    // 最短通关时间
+			 optional int32 max_kill_num     = 4;    // 单次击杀数量
+		}
+
+        optional int32 spexp_level_times        = 1;    // 已挑战次数
+		optional int32 buy_spexp_level 			= 2;   // 已购买次数	
+        repeated PbBoxData box_data    			= 3;    // 阶段数据（日清）
+		optional int32 left_level_times         = 4;    // 剩余次数
+		repeated sao_dang_data  sao_dang        = 5;    //阶段数据（不清）
+}
+
+message PbPlayerAchieveTask 
+{
+		repeated int32 achieve_task = 1;
+}
+
+message PbAchieveTaskState
+{
+		message PbHardLevel
+		{
+				optional int32 id = 1;
+				optional int32 battle_times = 2;
+		}
+		
+		message PbLevelState
+		{
+				optional int32 id = 1;
+				optional int32 star = 2;
+				optional int32 times = 3; 
+		}
+		repeated PbHardLevel hard_level = 1;
+		repeated PbLevelState level_state = 2;
+}
+
+// 通用商店
+message PbGeneralShop
+{
+		message PbItem
+		{
+				optional int32 id = 1;
+				optional int32 buy_times = 2;
+		}
+       repeated PbItem ever_buy   = 1;    // 永久购买限制
+       repeated PbItem today_buy  = 2;    // 每日购买限制
+}
+
+
+// 宝箱数据
+message PbPlayerChest
+{
+        // 宝箱记录
+        message PbChestRecord
+        {
+                required int32 id               = 1;    // ID
+                optional int32 times_open       = 2;    // 开启次数
+        }
+        repeated PbChestRecord chest_record     = 1;    // 宝箱记录
+}
+
+// 时装
+message PbClothes
+{
+        message PbClothesLevel
+        {
+                optional int32 id               = 1;    // 时装ID
+                optional int32 level			= 2;    // 时装等级
+        }
+       repeated PbClothesLevel clothes			= 1;    // 时装
+}
+
+
+// 系统设置
+message PbPlayerSettings
+{
+        repeated string problem = 1; // 玩家提交的问题或bug 
+}
+
+// 抽奖
+message PbGamble
+{
+        message PbGambleData
+        {
+			optional uint32 gambleid				= 1;    //抽奖id
+			optional uint32 total_gamble_times		= 2;	//抽奖总次数
+			optional uint32 gamble_times			= 3;    //累积抽奖总次数
+			optional uint32 free_gamble_time		= 4;    //抽奖时间
+			optional uint32 today_gamble_times		= 5;    //每日抽奖次数
+        }
+		repeated PbGambleData gamble_data			= 1;	//抽奖数据
+		optional uint32 silvermedal               	= 2;    // 银牌
+        optional uint32 goldmedal					= 3;    // 金牌
+}
+
+// 夺宝
+message PbSnatch
+{
+        message PbSnatchInfo
+        {
+			optional uint32 charid			= 1;    //charid
+			optional string name			= 2;	//名字
+			optional uint32 itemid			= 3;    //道具id
+			optional uint32 snatch_time		= 4;    //抢夺时间
+			optional uint32 level 			= 5;
+			optional uint32 profession 		= 6;
+			optional uint32 fight_power 	= 7;
+			optional bool issuccess 		= 8;
+        }
+		message PbItemSnatch
+        {
+                optional uint32 itemid = 1;
+                optional uint32 count   = 2;
+        }       		
+		optional int32 vigour				= 1;	//精力
+		optional int32 buy_vigour_times		= 2;    //购买精力次数
+		optional uint32 free_war_time		= 3;    //免战结束时间
+		repeated PbSnatchInfo snatch_info	= 4;	//抢夺数据
+		repeated PbItemSnatch items 		= 5;	//碎片背包
+		optional uint32 last_restore_time	= 6;    //上次精力恢复时间
+}
+
+// vip商店道具购买情况
+message PbVipItemShop
+{
+        message PbBuyItem
+        {
+			optional uint32 dbid			= 1;    //id
+			optional uint32 count			= 2;    //购买次数
+
+        }		
+		repeated PbBuyItem item				= 1;	//购买记录
+}
+
+// 已兑换礼品码
+message PbGiftCodeExchanged
+{
+    message PbCodeRecord
+    {
+        required bytes code         = 1;        // 礼包码
+        optional uint32 time        = 2;        // 领取时间
+    }
+    message PbGroupRecord
+    {
+        required int32 group        = 1;        // 礼包码组
+        optional uint32 time        = 2;        // 领取时间
+    }
+    repeated PbCodeRecord   codeRecords      = 1;      // 码记录列表
+    repeated PbGroupRecord  groupRecords     = 2;      // 码组记录列表
+}
+
+
+// 商城道具购买情况
+message PbShopGame
+{
+        message PbShopItem
+        {
+			optional uint32 dbid			= 1;    //id
+			optional uint32 count			= 2;    //购买次数
+        }		
+		repeated PbShopItem item				= 1;	//购买记录
+		repeated PbShopItem freeitem			= 2;	//购买记录
+}
+// 竞技场数据
+message PbPlayerPvpInfo
+{
+        // 战斗记录
+        message PbFightRecord
+        {
+                optional int32 status = 1;      // 结果
+                optional uint32 time = 2;       // 时间
+                optional uint32 other_id = 3;   // 对方ID
+                optional bytes other_name = 4;  // 对方名称
+                optional int32 rank = 5;        // 当前排名
+        }
+
+        optional int32 times_used               = 1;    // 已使用次数
+        optional int32 times_bought             = 2;    // 已购买次数
+        optional int32 times_surplus            = 3;    // 过剩次数
+        optional int32 feat                     = 4;    // 战功
+        optional int32 best_rank                = 5;    // 历史最佳排名
+        optional uint32 lasttime_fight          = 6;    // 上次战斗时间
+        repeated PbFightRecord fight_records    = 7;    // 战斗记录
+}
+
+
+//组队副本
+message PbTeamLevel
+{
+	   message PbTeamLevelState
+        {
+			optional int32 dbid			= 1;    //难度
+			optional int32 state		= 2;    //是否已打过
+        }		
+		repeated PbTeamLevelState teamlevel	= 1;	//副本详情
+}
+
+//碎片背包
+message PbItemsChip
+{
+        message PbItemChip
+        {
+                optional int32 item_id = 1;
+                optional int32 count   = 2;
+        }
+        repeated PbItemChip items = 1;
+}
+
+
+message PbPlayerGuild
+{
+    message PbInvited
+    {
+		optional uint32 invitedid		= 1;    //id
+		optional uint32 time			= 2;    //申请时间
+    }	
+	message PbDonateTimes	
+    {
+		optional uint32 id				= 1;    //id
+		optional uint32 times			= 2;    //次数
+    }	
+	message PbSkill	
+    {
+		optional uint32 id				= 1;    //id
+		optional uint32 level			= 2;    //等级
+    }	
+	required int32 guildid 				= 1;		//公会id
+	optional int32 sumcontribtion		= 2;		//总贡献
+	optional int32 curcontribtion		= 3;		//当前贡献
+	optional int32 praytimes			= 4;		//祈福次数
+	repeated PbInvited invitedid		= 5;		//申请公会列表		
+	repeated PbDonateTimes donate		= 6;		//捐献
+	optional int32 quitguildtime		= 7;		//
+	repeated PbSkill skill				= 8;		//技能
+}
+
+message PbGuildWarData
+{
+	required uint32 left_times = 1;  //今日的剩余次数
+	required uint32 total_times = 2; //今日可完成的总次数
+	required uint32 score = 3;		 //积分
+	
+}
+
+message PbMysticalShop
+{
+	required uint32 free_times = 1;  //免费刷新次数
+	required uint32 free_time = 2; 	//免费刷新时间
+	required uint32 soul_stone = 3;	//魂石
+	
+}
+
+message PbPlayerCarnivalInfo
+{
+	message PbTask_info 
+	{
+		optional int32 id = 1;
+		optional int32 status = 2; 
+	}
+	repeated PbTask_info task_info = 1;
+	optional int32 common_level = 2;    //通关普通副本的章节
+	optional int32 special_level = 3;   //通关精英副本的章节
+	optional int32 pvp_rank = 4;        //pvp 排行榜(历史最佳排名)
+	optional int32 god_weapon_level = 5;  //神兵祭坛等级
+	optional int32 ldd_rank = 6;       //生死门排名
+	optional int32 snatch_total_times = 7 ; //宝物合成总次数
+	optional int32 snatch_times_green = 8 ; //合成绿色宝物次数
+	optional int32 snatch_times_blue =  9;   //合成蓝色宝物次数
+	optional int32 snatch_times_purple = 10 ; //合成紫色宝物次数
+	optional int32 snatch_times_orange = 11 ; //合成橙色宝物次数
+	optional int32 quench_times = 12;  //淬炼次数
+	optional int32 ldd_floor = 13;  //生死门层数
+	optional int32 ldd_reset_times = 14;  //生死门重置次数
+	optional int32 symbol_num_blue = 15;  //获得蓝色符文个数
+	optional int32 symbol_num_purple = 16; //获得紫色符文个数
+	optional int32 symbol_num_orange = 17; //获得橙色符文个数
+}// 存档的二进制内容
+message PbRealTimePVPData
+{
+    // 战斗记录
+    message PbRealTimePVPRecord
+    {
+        optional int32 status = 1;      // 结果
+        optional uint32 time = 2;       // 时间
+        optional uint32 other_id = 3;   // 对方ID
+        optional bytes other_name = 4;  // 对方名称
+        optional int32 rank = 5;        // 当前排名
+    }
+
+	required uint32 left_pvp_times = 1;  //今日的剩余次数
+	required uint32 total_pvp_times = 2; //今日可完成的总次数
+	required uint32 pvp_score = 3;		 //积分
+	optional uint32 location_pvp_times = 4;		 //定分赛次数
+	optional uint32 pvp_wintimes = 5;		 //胜利次数
+	optional uint32 pvp_losetimes = 6;		 //失败次数
+	optional int32 best_rank                = 7;    // 历史最佳排名
+	repeated PbRealTimePVPRecord fight_records    = 8;    // 战斗记录
+	
+}// 存档的二进制内容
+
+//赏金任务
+message PbBountyTask
+{
+    message PbBountyTaskData
+    {
+        optional int32 id = 1;      // id
+        optional int32 star = 2;    // 星级
+	}
+	repeated PbBountyTaskData task = 1;
+}
+
+// 金矿
+message PbGoldStone
+{
+	optional uint32 times = 1; // 使用次数 
+	optional uint32 buytimes = 2; // 购买次数 
+	optional uint32 lefttimes = 3; // 剩余次数 
+	
+}
+
+// 任务变量
+message PbPlayerVars
+{
+    message PbVar
+    {
+        optional int32 key      = 1;    // 键
+        optional int64 value    = 2;    // 值
+    }
+    repeated PbVar vars         = 1;    // 变量列表
+}
+
+message PbGodShop
+{
+    message PbItem
+    {
+        optional int32 dbid      = 1;   // dbid
+        optional bool isbuy		 = 2;   // 是否购买
+    }
+	optional uint32 use_times  = 1;		//使用刷新次数
+	optional uint32 free_times = 2;  	//免费刷新次数
+	optional uint32 free_time  = 3; 	//免费刷新时间
+	optional uint32 soul_weapon= 4;		//魂兵
+	repeated PbItem item	   = 5;		//商店道具列表
+	
+}
+
+//玩家团购数据
+message PbPlayerGroupBuyingData
+{
+	optional uint32 groupBuyingScore = 1; // 团购积分 
+	optional uint32 groupBuyingCoupon = 2; // 团购券 
+	optional uint32 getScoreRewardState = 3; // 领取积分奖励的状态 
+}
+
+message Serialize
+{
+	repeated PbCounter pb_counters = 1; //人物身上计数器
+	optional PbCommonSingleUse pb_common_single_use = 2;
+	optional PbCommonTodayInfo pb_common_today_info = 3; 
+	optional PbCurrentEpinlay pb_current_epinlay = 4; 
+	optional PbCurrentEquip pb_current_equip = 5; 
+	optional PbCurrentSkill pb_current_skill = 6; 
+	optional PbCurrentSymbol pb_current_symbol = 7; 
+	optional PbFightAttr pb_fight_attr = 8; 
+	optional PbItemsEquip pb_items_equip = 9; 
+	optional PbItemsGem pb_items_gem = 10; 
+	optional PbItemsMaterial pb_items_material = 11;
+	optional PbItemsSkill pb_items_skill = 12;
+	optional PbItemsSymbol pb_items_symbol = 13;
+	optional PbMainTaskInfo pb_main_task_info = 14; 
+	optional PbMainTaskTodayInfo pb_main_task_today_info = 15; 
+	optional PbPlayerAchieveInfo pb_player_achieve_info = 16; 
+	optional PbPlayerDayTask pb_player_day_task = 17;
+	optional PbPlayerEnhance pb_player_enhance = 18;
+	optional PbPlayerTreasure pb_player_treasure = 19; 
+	optional PbPlayerAttributes pb_player_attributes = 20;
+	optional PbPlayerOtherInfo pb_player_other_info = 21;
+	optional PbPlayerGodWeapon pb_player_god_weapon = 22;
+	optional PbPlayerMail  pb_player_mails = 23;
+	optional PbPlayerTitle pb_player_title = 24;
+	optional PbFriendPvp pb_friend_pvp = 26;
+	optional PbPlayerRecharge pb_player_recharge = 27;
+	optional PbItemsSymbolEx pb_items_symbol_ex = 28;
+    optional PbPlayerGoldLevel pb_player_goldlevel = 29;
+    optional PbPlayerExpLevel pb_player_explevel = 30;
+	optional PbPlayerAchieveTask pb_player_achieve_task = 31;
+	optional PbAchieveTaskState	pb_achieve_task_state = 32;
+	optional PbPlayerSpExpLevel pb_player_spexplevel = 33;
+	optional PbGeneralShop pb_general_shop = 34;	
+    optional PbPlayerChest pb_player_chest = 35;
+	optional PbClothes	pb_clothes = 36;
+	optional PbPlayerSettings pb_settings = 37;
+	optional PbGamble pb_gamble = 38;
+    optional PbPlayerBossLevel pb_player_bosslevel = 39;
+	optional PbSnatch pb_snatch = 40;
+	optional PbVipItemShop	pb_vipitemshop	=	41;
+    optional PbGiftCodeExchanged pb_giftcode_exchanged = 42;	
+	optional PbShopGame pb_shopgame	=	43;
+	optional PbPlayerGuild pb_playerguild	=	44;
+	optional PbGuildWarData pb_guildwar = 45;
+    optional PbPlayerPvpInfo pb_player_pvp  = 46;
+	optional PbTeamLevel pb_teamlevel = 47;
+	optional PbPlayerCarnivalInfo pb_player_carnival=48;
+	optional PbItemsChip pb_items_chip = 49;
+    optional PbPlayerBossFight pb_player_bossfight = 50;
+	optional PbMysticalShop pb_mystical_shop = 51;
+	optional PbRealTimePVPData pb_realtimepvp = 52;
+	optional PbBountyTask pb_bounty_task = 53;
+	optional PbGoldStone pb_goldstone = 54;
+    optional PbPlayerVars pb_player_vars = 55;
+
+    optional PbPlayerGroupBuyingData pb_groupbuying = 56;
+	optional PbGodShop pb_godshop = 57;
+	optional PbClientVersion pb_clientversion = 58;
+}
+
+message PbOffline
+{
+	optional uint32 type = 1;
+	optional bytes info = 2;
+}
+
+message PbOfflineTitle
+{
+	optional uint32 titleid = 1;
+	optional uint32 time = 2;
+}
+
+message PbActivityRewardCount
+{
+	optional uint32 id = 1;
+	optional uint32 index = 2;
+	optional uint32 usecount = 3;
+}
+
+message PbActivityRecorder
+{
+	repeated PbActivityRewardCount pb_activity_reward_count = 1;
+}
+
+// 全局记录器
+message PbGlobalRecorder
+{
+	optional PbActivityRecorder pb_activity_recoder = 1;
+}
+
+message PbGlobalMail
+{
+	optional uint32 is_get = 1;
+	optional uint32 is_read = 2;
+	optional uint32 is_del = 3;
+	optional uint32 itime = 4;
+	optional uint32 field = 5;
+	optional bytes name = 6;
+	optional bytes content = 7;
+	optional bytes sender = 8;
+	optional bytes attach = 9;
+	optional bytes money = 10;
+	optional uint32 expiretime = 11;
+}
+
+// 全局功能机制
+message PbGlobalService
+{
+	optional PbGlobalMail pb_global_mail = 1;
+}
+
+// 排行榜信息记录
+message PbPVPRankRecord
+{
+        message PbInfo
+        {
+                optional int32 status = 1;      // 结果
+                optional uint32 time = 2;       // 时间
+                optional uint32 other_id = 3;   // 对方ID
+                optional bytes other_name = 4;  // 对方名称
+                optional int32 rank = 5;        // 当前排名
+        }
+        repeated PbInfo infoList = 1;
+}
+
+message PbOfflineSnatch
+{
+	optional uint32 charid = 1;
+	optional bytes name = 2;
+	optional uint32 itemid = 3;
+	optional uint32 snatch_time = 4;
+	optional uint32 level = 5;
+	optional uint32 profession = 6;
+	optional uint32 fight_power = 7;
+	optional bool issuccess = 8;
+}
+
+message PbFriendData
+{
+	repeated uint32 friendid = 1;		//好友id
+	repeated uint32 invitedid = 2;		//申请好友id
+}
+
+message PbGuildData
+{
+	message PbGuildCharData
+	{
+		required uint32 charid = 1;			//玩家id
+		optional uint32 occupation = 2;		//职位
+	}
+    message PbInvited
+    {
+		optional uint32 invitedid		= 1;    //id
+		optional uint32 time			= 2;    //申请时间
+    }	
+    message PbActiveWorShip
+    {
+		optional uint32 charid			= 1;    //charid
+		optional uint32 dbid			= 2;    //dbid	
+		optional uint32 mailgift		= 3;    //奖励id
+		optional uint32 pvprank			= 4;    //pvp排行
+    }		
+	message PbWorShip
+    {
+		optional uint32 charid			= 1;    //charid
+		optional uint32 dbid			= 2;    //dbid
+	}
+	message PbSkill	
+    {
+		optional uint32 id				= 1;    //id
+		optional uint32 level			= 2;    //等级
+    }	
+	repeated PbGuildCharData guildchar 	= 1;	//公会玩家列表
+	repeated PbInvited invited			= 2;	//申请列表
+	optional uint32 savetime 			= 3;	//保存公会时间
+	repeated PbActiveWorShip activeworship = 4;	//激活膜拜数据
+	repeated PbWorShip worship			= 5;	//膜拜数据
+	optional uint32 contribtion 		= 6;	//公会贡献
+	repeated PbSkill skill				= 7;	//技能
+}
+
+
+
+// 排行榜信息 
+message PbTopListRecord
+{
+        message PbInfo
+        {
+                optional uint32 unKey = 1;      	// KEY
+                optional uint64 i64Score = 2;       // SCORE
+        }
+        repeated PbInfo infoList = 1;
+}
+
+message PbOfflineGoldStone
+{
+	optional uint32 money = 1;
+}
+
+
+// 基金购买信息
+message PbFundBuyRecord
+{
+	message PbFundInfo
+	{
+		 optional uint32 day = 1; // 购买的提案数
+		 optional uint32 buy_people = 2 ; // 购买的人数 
+	}
+	repeated PbFundInfo infoList = 1; 
+}
+
+//客户端版本号
+message PbClientVersion
+{
+	optional bytes clientversion = 1;		//客户端版本
+	optional bool isGetReward = 2;        //是否领取奖励
+}
+

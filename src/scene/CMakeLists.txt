@@ -1,24 +1,30 @@
 # Project name
 PROJECT(scene)
 
-# Module Protobuf
-FIND_PACKAGE(Protobuf REQUIRED NO_MODULE)
+# Module Json
+FIND_PACKAGE(JSON REQUIRED)
+
 # Header directories
 INCLUDE_DIRECTORIES(
-	${PROTOBUF_INCLUDE_DIRS}
+	${JSON_INCLUDE_DIRS}
+	../core
 	${CMAKE_BINARY_DIR}/src
+	${CMAKE_SOURCE_DIR}/src
+	${CMAKE_SOURCE_DIR}/src/protocol
 	)
 
 # All source files
+FILE(GLOB_RECURSE SRC_LIST . "*.cpp" "*.c" "*.h" "*.hpp")  
 AUX_SOURCE_DIRECTORY(. SRC_LIST) 
 
 # Generate binary
 ADD_EXECUTABLE(${PROJECT_NAME} ${SRC_LIST})
 # Link libraries
-TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${PROTOBUF_LIBRARIES} proto core)
-
-# Treat warnings as errors
-SET_TARGET_PROPERTIES(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "/WX")
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} 
+	core 
+	proto
+	${JSON_LIBRARIES} 
+	)
 
 # Install binary
 INSTALL(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${BINARY_OUTPUTPATH})

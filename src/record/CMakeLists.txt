@@ -1,0 +1,32 @@
+# Project name
+PROJECT(record)
+
+# Module Libxm2
+FIND_PACKAGE(LIBXML2 REQUIRED)
+# Module Hiredis
+FIND_PACKAGE(HIREDIS REQUIRED)
+
+# Header directories
+INCLUDE_DIRECTORIES(
+	${LIBXML2_INCLUDE_DIRS}
+	${HIREDIS_INCLUDE_DIRS}
+	../core
+	${CMAKE_BINARY_DIR}/src
+	${CMAKE_SOURCE_DIR}/src
+	${CMAKE_SOURCE_DIR}/src/protocol
+	)
+
+# All source files
+FILE(GLOB_RECURSE SRC_LIST . "*.cpp" "*.c" "*.h" "*.hpp")  
+AUX_SOURCE_DIRECTORY(. SRC_LIST) 
+
+# Generate binary
+ADD_EXECUTABLE(${PROJECT_NAME} ${SRC_LIST})
+# Link libraries
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} 
+	core 
+	proto
+	)
+
+# Install binary
+INSTALL(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${BINARY_OUTPUTPATH})
